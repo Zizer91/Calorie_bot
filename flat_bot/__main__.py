@@ -18,7 +18,7 @@ def main() -> None:
     ap.add_argument("--dry-run", action="store_true",
                     help="печатать в консоль вместо Telegram, базу не трогать")
     ap.add_argument("--sources", help="через запятую, напр. cian,avito")
-    ap.add_argument("--env", default=".env", help="путь к .env")
+    ap.add_argument("--env", default=None, help="файл настроек (по умолчанию settings.env или .env)")
     ap.add_argument("-v", "--verbose", action="store_true")
     args = ap.parse_args()
 

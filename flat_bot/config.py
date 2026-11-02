@@ -6,6 +6,8 @@ from dataclasses import dataclass, field
 
 from dotenv import load_dotenv
 
+ENV_FILES = ("settings.env", ".env")
+
 ALL_SOURCES = ["cian", "avito", "domclick", "yandex", "etagi", "n1"]
 
 
@@ -69,9 +71,15 @@ class Settings:
     domclick_address_guid: str = "c2deb16a-0330-4f05-821f-1d09c93331e6"  # ФИАС: Санкт-Петербург
 
     @classmethod
-    def from_env(cls, env_file: str | None = ".env") -> "Settings":
+    def from_env(cls, env_file: str | None = None) -> "Settings":
+        """Файл настроек: указанный явно, иначе settings.env, иначе .env."""
         if env_file:
             load_dotenv(env_file)
+        else:
+            for name in ENV_FILES:
+                if os.path.exists(name):
+                    load_dotenv(name)
+                    break
         d = cls()
         return cls(
             telegram_token=os.getenv("TELEGRAM_BOT_TOKEN", ""),
