@@ -51,7 +51,7 @@ class Http:
         self._last = time.monotonic()
 
     def _check(self, r: requests.Response, url: str) -> None:
-        if r.status_code in (401, 403, 429) or re.search(r"captcha|/blocked", r.url):
+        if r.status_code in (401, 403, 429, 439) or re.search(r"captcha|/blocked", r.url):
             raise BlockedError(f"{r.status_code} {r.url}")
         r.raise_for_status()
         if len(r.text) < 200_000 and any(m in r.text[:20000] for m in BLOCK_MARKERS):

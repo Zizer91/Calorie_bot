@@ -52,7 +52,7 @@ class Settings:
     allow_unknown_metro: bool = False
 
     # --- работа бота ---
-    sources: list[str] = field(default_factory=lambda: list(ALL_SOURCES))
+    sources: list[str] = field(default_factory=lambda: [s for s in ALL_SOURCES if s != "n1"])
     pages_per_source: int = 3
     max_details_per_source: int = 20  # сколько карточек за проход открывать для уточнения
     interval_min: int = 20

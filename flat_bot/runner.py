@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import logging
+
+import requests
 from dataclasses import dataclass
 
 from .config import Settings
@@ -80,6 +82,9 @@ class Runner:
         except BlockedError as ex:
             error = ex
             log.warning("%s: блокировка/капча: %s", name, ex)
+        except requests.RequestException as ex:
+            error = ex
+            log.warning("%s: сайт недоступен: %s", name, type(ex).__name__)
         except Exception as ex:  # noqa: BLE001
             error = ex
             log.exception("%s: ошибка парсинга", name)
